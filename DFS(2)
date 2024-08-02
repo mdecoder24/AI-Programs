@@ -1,0 +1,63 @@
+def dfs_find_all_paths(maze, start, goal):
+  """
+  Finds all possible paths from a starting position to a goal position in a maze using Depth-First Search.
+
+  Args:
+      maze: A 2D list representing the maze, where 's' represents the starting position, 
+            '.' represents an open space, and '#' represents a wall.
+      start: A tuple representing the starting position (row, column).
+      goal: A tuple representing the goal position (row, column).
+
+  Returns:
+      A list of lists containing all possible paths from the start to the goal position. 
+      Each inner list represents a single path as a sequence of coordinates.
+  """
+
+  # Define possible movements: up, down, left, right
+  movements = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+  # Initialize stack for DFS
+  stack = [(start, [])] 
+
+  # Initialize list to store all paths
+  all_paths = []
+
+  while stack:
+    # Pop a cell from the stack
+    current, path = stack.pop()
+
+    # Check if goal is reached
+    if current == goal:
+      all_paths.append(path + [current])  # Add the current path including the goal
+
+    # Explore neighbors
+    for di, dj in movements:
+      ni, nj = current[0] + di, current[1] + dj
+
+      # Check if neighbor is within bounds and not a wall
+      if 0 <= ni < len(maze) and 0 <= nj < len(maze[0]) and maze[ni][nj] != '#':
+        # Add neighbor to stack with updated path
+        stack.append(((ni, nj), path + [current]))
+
+  return all_paths
+
+# Example maze (3x4)
+maze = [
+    ['s', '#', '#', '.'],
+    ['#', '.', '.', '#'],
+    ['.', '.', ' ', 'e'],
+]
+
+start = (0, 0)  # Starting position
+goal = (2, 3)  # Goal position
+
+# Find all paths using DFS
+all_paths_dfs = dfs_find_all_paths(maze, start, goal)
+
+if all_paths_dfs:
+  print("All possible paths found using DFS:")
+  for path in all_paths_dfs:
+    print(path)
+else:
+  print("No paths found from start to goal using DFS.")
+
