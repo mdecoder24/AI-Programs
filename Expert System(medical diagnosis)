@@ -1,0 +1,35 @@
+# Define rules for disease diagnosis
+rules = {
+    'Common Cold': ['runny nose', 'sneezing', 'sore throat'],
+    'Influenza': ['fever', 'cough', 'fatigue'],
+    'Bronchitis': ['cough', 'fever', 'fatigue', 'runny nose']
+}
+
+# Function to infer possible diseases based on symptoms
+def infer_disease(symptoms):
+    possible_diseases = []
+    for disease, symptom_list in rules.items():
+        if all(symptom in symptoms for symptom in symptom_list):
+            possible_diseases.append(disease)
+    return possible_diseases
+
+# Main function to interact with the user
+def main():
+    print("Welcome to the Disease Diagnosis Expert System")
+    print("Please enter your symptoms (comma-separated):")
+    user_input = input().strip().lower()
+    symptoms = [symptom.strip() for symptom in user_input.split(',')]
+    
+    if not symptoms:
+        print("No symptoms entered. Exiting.")
+        return
+
+    possible_diseases = infer_disease(symptoms)
+    
+    if possible_diseases:
+        print(f"The possible disease(s) based on your symptoms are: {', '.join(possible_diseases)}")
+    else:
+        print("No matching disease found for the given symptoms.")
+
+if __name__ == "__main__":
+    main()
