@@ -1,0 +1,63 @@
+
+# DFS
+class Graph:
+
+    """
+    A class representing a graph using adjacency list representation.
+    """
+
+    def __init__(self, gdict=None):
+        """
+        Initializes a Graph object.
+
+        Args:
+            gdict (dict, optional): A dictionary where the keys are vertices and the values are lists of adjacent vertices. Defaults to None.
+        """
+
+        if gdict is None:
+            self.gdict = {}  # Create an empty dictionary to store the graph
+        else:
+            self.gdict = gdict.copy()  # Copy the provided dictionary
+
+    def dfs(self, vertex):
+        """
+        Performs Depth-First Search (DFS) traversal on the graph starting from a given vertex.
+
+        Args:
+            vertex: The starting vertex for the DFS traversal.
+        """
+
+        visited = [vertex]  # Create a list to store visited vertices
+        stack = [vertex]  # Create a stack to store vertices to be explored
+
+        while stack:
+            # Pop a vertex from the stack
+            popVertex = stack.pop()
+
+            # Print the popped vertex
+            print(popVertex)
+
+            # Get all adjacent vertices of the popped vertex
+            for adjacentVertex in self.gdict[popVertex]:
+                if adjacentVertex not in visited:
+                    # If the adjacent vertex is not visited, add it to the visited list and stack
+                    visited.append(adjacentVertex)
+                    stack.append(adjacentVertex)
+
+# Create a custom dictionary representing the graph structure
+customDict = {
+    "a": ["b", "c"],
+    "b": ["a", "d", "e"],
+    "c": ["a", "e"],
+    "d": ["b", "e", "f"],
+    "e": ["d", "f", "c"],
+    "f": ["d", "e"]
+}
+
+# Create a graph object
+g = Graph(customDict)
+
+# Perform DFS traversal starting from vertex "a"
+print("DFS Traversal (starting from vertex a): ")
+g.dfs("a")
+
