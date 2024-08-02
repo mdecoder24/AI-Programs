@@ -1,0 +1,55 @@
+def bfs_find_all_paths(maze, start, goal):
+
+  # Define possible movements: up, down, left, right
+  movements = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+  # Initialize queue for BFS
+  queue = [(start, [])]
+
+  queue_idx = 0
+
+  # Initialize list to store all paths
+  all_paths = []
+
+  # Perform BFS to find all paths
+  while queue_idx < len(queue):
+    current, path = queue[queue_idx]
+    queue_idx += 1
+
+    i, j = current
+
+    # Check if goal is reached
+    if current == goal:
+      all_paths.append(path + [current])  # Add the current path including the goal
+
+    # Explore neighbors
+    for di, dj in movements:
+      ni, nj = i + di, j + dj
+
+      # Check if neighbor is within bounds and not a wall and not visited
+      if 0 <= ni < len(maze) and 0 <= nj < len(maze[0]) and maze[ni][nj] != '#' and (ni, nj) not in path:
+        # Add neighbor to queue with updated path
+        queue.append(((ni, nj), path + [current]))
+
+  return all_paths
+
+# Example maze (3x4)
+maze = [
+    ['S', '.', '.', '.'],
+    ['#', '#', '.', '#'],
+    ['.', '.', '.', 'G']
+]
+
+start = (0, 0)  # Starting position
+goal = (2, 3)  # Goal position
+
+# Find all paths using BFS
+all_paths_bfs = bfs_find_all_paths(maze, start, goal)
+
+if all_paths_bfs:
+  print("All possible paths found using BFS:")
+  for path in all_paths_bfs:
+    print(path)
+else:
+  print("No paths found from start to goal using BFS.")
+
