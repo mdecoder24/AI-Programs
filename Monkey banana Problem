@@ -1,0 +1,37 @@
+class MonkeyBananaProblem:
+    def __init__(self, room_width, room_height, monkey_start, banana_position):
+        self.room_width = room_width
+        self.room_height = room_height
+        self.monkey_position = monkey_start
+        self.banana_position = banana_position
+        self.chair_position = monkey_start
+
+    def move_monkey(self, new_position):
+        self.monkey_position = new_position
+
+    def move_chair(self, new_position):
+        self.chair_position = new_position
+
+    def can_reach_bananas(self):
+        return self.monkey_position == self.banana_position
+
+    def solve(self):
+        steps = []
+        if self.chair_position[0] < self.banana_position[0]:
+            steps.extend(['Move chair right'] * (self.banana_position[0] - self.chair_position[0]))
+        elif self.chair_position[0] > self.banana_position[0]:
+            steps.extend(['Move chair left'] * (self.chair_position[0] - self.banana_position[0]))
+        if self.chair_position[1] < self.banana_position[1]:
+            steps.extend(['Move chair up'] * (self.banana_position[1] - self.chair_position[1]))
+        elif self.chair_position[1] > self.banana_position[1]:
+            steps.extend(['Move chair down'] * (self.chair_position[1] - self.banana_position[1]))
+        steps.append('Climb chair')
+        steps.append('Grab bananas')
+        return steps
+
+if __name__ == "__main__":
+    problem = MonkeyBananaProblem(room_width=5, room_height=6, monkey_start=(2, 3), banana_position=(4, 5))
+    solution = problem.solve()
+    print("Solution steps:")
+    for step in solution:
+        print(step)
