@@ -1,0 +1,25 @@
+import random
+
+def coin_flip_game():
+    """
+    Simulates a coin flip game where the user guesses heads or tails.
+    """
+    print("Welcome to the Coin Flip Game!")
+
+    print("I have flipped a coin. Try to guess if it's heads or tails!")
+
+    # Generate a random number (0 or 1) to represent heads or tails
+    coin_result = random.randint(0, 1)
+
+    # Player's guess
+    guess = int(input("Enter your guess (heads or tails): "))
+
+    # Check if the guess is correct
+    if guess == coin_result:
+        print("Congratulations! You guessed correctly!")
+    else:
+        print("Sorry, that's not correct. Better luck next time!")
+        print("The coin landed on:", coin_result)
+
+# Call the function to start the game
+coin_flip_game()
